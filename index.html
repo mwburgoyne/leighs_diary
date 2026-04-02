@@ -1,0 +1,1828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leigh's Diary &mdash; 1978&ndash;1979</title>
+<style>
+/* ===== Reset & Base ===== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: Georgia, 'Times New Roman', serif;
+    background: #faf6f0;
+    color: #3b2f1e;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+/* ===== Header ===== */
+header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #d4c5a9;
+}
+header h1 {
+    font-size: 2rem;
+    color: #5a4a32;
+    margin-bottom: 0.3rem;
+    letter-spacing: 0.02em;
+}
+header .subtitle {
+    font-size: 0.95rem;
+    color: #8a7a62;
+    font-style: italic;
+    margin-bottom: 1rem;
+}
+
+/* ===== Toolbar (search + corrections) ===== */
+.toolbar {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 0.8rem;
+}
+.search-box {
+    position: relative;
+    flex: 1;
+    max-width: 400px;
+    min-width: 200px;
+}
+.search-box input {
+    width: 100%;
+    padding: 0.5rem 2.2rem 0.5rem 0.8rem;
+    font-size: 0.9rem;
+    font-family: Georgia, 'Times New Roman', serif;
+    border: 1px solid #d4c5a9;
+    border-radius: 6px;
+    background: #fff;
+    color: #3b2f1e;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.search-box input:focus {
+    border-color: #5a4a32;
+}
+.search-box input::placeholder {
+    color: #b0a080;
+}
+.search-clear {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: #a09070;
+    cursor: pointer;
+    padding: 0 4px;
+    display: none;
+}
+.search-clear.visible { display: block; }
+.search-clear:hover { color: #5a4a32; }
+
+.corrections-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.45rem 0.9rem;
+    font-size: 0.85rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-weight: 600;
+    background: #fff;
+    color: #6b5b3e;
+    border: 1px solid #d4c5a9;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    white-space: nowrap;
+}
+.corrections-badge:hover {
+    background: #f0ece4;
+    border-color: #b0a080;
+}
+.corrections-badge .count {
+    background: #5a4a32;
+    color: #faf6f0;
+    font-size: 0.75rem;
+    padding: 0.1rem 0.45rem;
+    border-radius: 10px;
+    min-width: 1.3rem;
+    text-align: center;
+}
+.corrections-badge .count.zero {
+    background: #c0b090;
+}
+
+/* ===== Breadcrumb ===== */
+.breadcrumb {
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    color: #8a7a62;
+}
+.breadcrumb a {
+    color: #6b5b3e;
+    text-decoration: none;
+    border-bottom: 1px dotted #b0a080;
+    cursor: pointer;
+}
+.breadcrumb a:hover {
+    color: #3b2f1e;
+    border-bottom-color: #3b2f1e;
+}
+.breadcrumb .sep { margin: 0 0.4rem; color: #c0b090; }
+.breadcrumb .current { color: #5a4a32; font-weight: 600; }
+
+h2 {
+    font-size: 1.5rem;
+    color: #5a4a32;
+    margin-bottom: 1.2rem;
+}
+
+/* ===== Card Grid ===== */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+}
+.card {
+    background: #fff;
+    border: 1px solid #e0d5c0;
+    border-radius: 8px;
+    padding: 1.2rem 1.4rem;
+    cursor: pointer;
+    transition: box-shadow 0.15s, transform 0.15s;
+}
+.card:hover {
+    box-shadow: 0 4px 16px rgba(90, 74, 50, 0.12);
+    transform: translateY(-2px);
+}
+.card-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #5a4a32;
+    margin-bottom: 0.3rem;
+}
+.card-meta {
+    font-size: 0.85rem;
+    color: #a09070;
+    margin-bottom: 0.5rem;
+}
+.card-summary {
+    font-size: 0.9rem;
+    color: #6b5b3e;
+    line-height: 1.5;
+}
+.card-undated {
+    border-style: dashed;
+    opacity: 0.8;
+}
+
+/* ===== Month Summary ===== */
+.month-summary {
+    font-style: italic;
+    font-size: 0.95rem;
+    color: #6b5b3e;
+    line-height: 1.6;
+    border-left: 3px solid #d4c5a9;
+    background: #f5f0e6;
+    padding: 0.8rem 1.2rem;
+    margin-bottom: 1.5rem;
+    border-radius: 0 6px 6px 0;
+}
+
+/* ===== Month Navigation ===== */
+.month-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e0d5c0;
+}
+.month-nav button {
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #faf6f0;
+    color: #6b5b3e;
+    border: 1px solid #d4c5a9;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+}
+.month-nav button:hover:not(:disabled) {
+    background: #f0ece4;
+    border-color: #b0a080;
+}
+.month-nav button:disabled { opacity: 0.3; cursor: default; }
+
+/* ===== Entry Card ===== */
+.entry {
+    background: #fff;
+    border: 1px solid #e0d5c0;
+    border-radius: 8px;
+    padding: 1.4rem 1.6rem;
+    margin-bottom: 1.2rem;
+}
+.entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.2rem;
+}
+.entry-date {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #5a4a32;
+}
+.original-date {
+    font-weight: 400;
+    font-size: 0.8rem;
+    color: #a09070;
+}
+.entry-pages {
+    font-size: 0.8rem;
+    color: #a09070;
+    margin-bottom: 0.8rem;
+}
+.entry-text {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #3b2f1e;
+}
+.entry-text p { margin-bottom: 0.8em; }
+.entry-text p:last-child { margin-bottom: 0; }
+.entry-text mark {
+    background: #f5e6a3;
+    color: #3b2f1e;
+    padding: 0.05em 0.15em;
+    border-radius: 2px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.3rem 0.7rem;
+    font-size: 0.8rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-weight: 600;
+    border: 1px solid #d4c5a9;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    background: #faf6f0;
+    color: #6b5b3e;
+}
+.btn:hover { background: #f0ece4; border-color: #b0a080; }
+.btn-note { font-size: 0.75rem; padding: 0.25rem 0.6rem; }
+
+.stats {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #a09070;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e0d5c0;
+}
+
+/* ===== Search Results ===== */
+.search-results {
+    display: none;
+}
+.search-results.active { display: block; }
+.search-results-header {
+    font-size: 0.9rem;
+    color: #8a7a62;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.search-results-header a {
+    color: #6b5b3e;
+    text-decoration: none;
+    border-bottom: 1px dotted #b0a080;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+.search-result-item {
+    background: #fff;
+    border: 1px solid #e0d5c0;
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    margin-bottom: 0.8rem;
+    cursor: pointer;
+    transition: box-shadow 0.15s;
+}
+.search-result-item:hover {
+    box-shadow: 0 2px 12px rgba(90, 74, 50, 0.1);
+}
+.search-result-date {
+    font-weight: 700;
+    color: #5a4a32;
+    font-size: 0.95rem;
+    margin-bottom: 0.2rem;
+}
+.search-result-month {
+    font-size: 0.8rem;
+    color: #a09070;
+    margin-bottom: 0.4rem;
+}
+.search-result-snippet {
+    font-size: 0.9rem;
+    color: #6b5b3e;
+    line-height: 1.5;
+}
+.search-result-snippet mark {
+    background: #f5e6a3;
+    color: #3b2f1e;
+    padding: 0.05em 0.15em;
+    border-radius: 2px;
+}
+
+/* ===== Selection Popup ===== */
+.selection-popup {
+    display: none;
+    position: absolute;
+    z-index: 500;
+    background: #5a4a32;
+    color: #faf6f0;
+    padding: 0.35rem 0.7rem;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+    white-space: nowrap;
+    user-select: none;
+}
+.selection-popup:hover { background: #3b2f1e; }
+.selection-popup::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #5a4a32;
+}
+.selection-popup:hover::after { border-top-color: #3b2f1e; }
+
+/* ===== Correction Modal ===== */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+.modal-overlay.active { display: flex; }
+
+.correction-modal {
+    background: #faf6f0;
+    border-radius: 10px;
+    padding: 1.5rem;
+    max-width: 560px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+}
+.correction-modal h3 {
+    font-size: 1.2rem;
+    color: #5a4a32;
+    margin-bottom: 1rem;
+}
+.correction-context {
+    background: #fff;
+    border: 1px solid #e0d5c0;
+    border-radius: 6px;
+    padding: 0.8rem 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: #6b5b3e;
+}
+.correction-context .label {
+    font-weight: 600;
+    color: #5a4a32;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.2rem;
+}
+.correction-context .value {
+    margin-bottom: 0.6rem;
+}
+.correction-context .value:last-child { margin-bottom: 0; }
+.correction-context blockquote {
+    border-left: 3px solid #d4c5a9;
+    padding-left: 0.8rem;
+    margin: 0.3rem 0;
+    font-style: italic;
+    color: #3b2f1e;
+}
+.correction-modal label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #5a4a32;
+    margin-bottom: 0.4rem;
+}
+.correction-modal textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 0.7rem;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #3b2f1e;
+    background: #fff;
+    border: 2px solid #d4c5a9;
+    border-radius: 6px;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.correction-modal textarea:focus { border-color: #5a4a32; }
+.correction-modal textarea::placeholder { color: #b0a080; }
+.correction-actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}
+.correction-actions .btn-save {
+    background: #5a4a32;
+    color: #faf6f0;
+    border-color: #5a4a32;
+    padding: 0.45rem 1.2rem;
+    font-size: 0.85rem;
+}
+.correction-actions .btn-save:hover { background: #3b2f1e; }
+.correction-actions .btn-cancel {
+    background: #fff;
+    color: #a09070;
+    border-color: #d4c5a9;
+    padding: 0.45rem 1rem;
+    font-size: 0.85rem;
+}
+
+/* ===== Corrections Panel ===== */
+.corrections-panel {
+    display: none;
+    position: fixed;
+    top: 0; right: 0; bottom: 0;
+    width: 420px;
+    max-width: 90vw;
+    background: #faf6f0;
+    border-left: 2px solid #d4c5a9;
+    box-shadow: -4px 0 20px rgba(0,0,0,0.1);
+    z-index: 900;
+    flex-direction: column;
+    overflow: hidden;
+}
+.corrections-panel.active { display: flex; }
+.corrections-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.2rem;
+    border-bottom: 1px solid #e0d5c0;
+    background: #f5f0e6;
+}
+.corrections-panel-header h3 {
+    font-size: 1.1rem;
+    color: #5a4a32;
+}
+.corrections-panel-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #a09070;
+    cursor: pointer;
+    padding: 0 4px;
+}
+.corrections-panel-close:hover { color: #5a4a32; }
+.corrections-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+}
+.corrections-empty {
+    text-align: center;
+    color: #a09070;
+    font-style: italic;
+    padding: 2rem 1rem;
+    font-size: 0.9rem;
+}
+.correction-item {
+    background: #fff;
+    border: 1px solid #e0d5c0;
+    border-radius: 6px;
+    padding: 0.8rem 1rem;
+    margin-bottom: 0.8rem;
+    font-size: 0.85rem;
+    position: relative;
+}
+.correction-item-date {
+    font-weight: 700;
+    color: #5a4a32;
+    font-size: 0.9rem;
+    margin-bottom: 0.2rem;
+}
+.correction-item-pages {
+    font-size: 0.75rem;
+    color: #a09070;
+    margin-bottom: 0.4rem;
+}
+.correction-item-selected {
+    border-left: 3px solid #d4c5a9;
+    padding-left: 0.6rem;
+    margin: 0.4rem 0;
+    font-style: italic;
+    color: #6b5b3e;
+    font-size: 0.85rem;
+}
+.correction-item-comment {
+    color: #3b2f1e;
+    line-height: 1.5;
+    margin-top: 0.4rem;
+}
+.correction-item-time {
+    font-size: 0.7rem;
+    color: #b0a080;
+    margin-top: 0.3rem;
+}
+.correction-item-delete {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    color: #c0b090;
+    cursor: pointer;
+    padding: 0 3px;
+}
+.correction-item-delete:hover { color: #a05050; }
+
+.corrections-panel-footer {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.8rem 1.2rem;
+    border-top: 1px solid #e0d5c0;
+    background: #f5f0e6;
+}
+.corrections-panel-footer button {
+    flex: 1;
+    padding: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+.btn-download {
+    background: #5a4a32;
+    color: #faf6f0;
+    border: 1px solid #5a4a32;
+}
+.btn-download:hover { background: #3b2f1e; }
+.btn-clear-all {
+    background: #fff;
+    color: #a09070;
+    border: 1px solid #d4c5a9;
+}
+.btn-clear-all:hover { background: #f0ece4; color: #a05050; }
+
+/* ===== Toast ===== */
+.toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: #5a4a32;
+    color: #faf6f0;
+    padding: 0.7rem 1.4rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    z-index: 2000;
+    transition: transform 0.3s ease;
+    pointer-events: none;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ===== Nav Bar ===== */
+.nav-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1.5rem;
+    padding: 0.6rem 0;
+}
+.nav-row {
+    display: flex;
+    justify-content: center;
+    gap: 0.3rem;
+    flex-wrap: wrap;
+}
+.nav-btn {
+    padding: 0.25rem 0.7rem;
+    font-size: 0.8rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-weight: 600;
+    background: #faf6f0;
+    color: #6b5b3e;
+    border: 1px solid #d4c5a9;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+    text-decoration: none;
+    line-height: 1.4;
+}
+.nav-btn:hover:not(.nav-btn-disabled):not(.nav-btn-active) {
+    background: #f0ece4;
+    border-color: #b0a080;
+}
+.nav-btn-active {
+    background: #5a4a32;
+    color: #faf6f0;
+    border-color: #5a4a32;
+}
+.nav-btn-disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+
+/* ===== Scan Panel ===== */
+.container {
+    transition: max-width 0.3s ease;
+}
+.container.scan-expanded {
+    max-width: 1280px;
+}
+.entry-with-scan {
+    display: flex;
+    gap: 1.2rem;
+    align-items: flex-start;
+}
+.entry-content {
+    flex: 1;
+    min-width: 0;
+}
+.scan-panel {
+    flex: 0 0 340px;
+    background: #f5f0e6;
+    border: 1px solid #e0d5c0;
+    border-radius: 8px;
+    padding: 0.8rem;
+    text-align: center;
+}
+.scan-thumb {
+    max-width: 100%;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: opacity 0.15s;
+    border: 1px solid #e0d5c0;
+}
+.scan-thumb:hover {
+    opacity: 0.85;
+}
+.scan-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: #6b5b3e;
+}
+.scan-nav button {
+    padding: 0.2rem 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #faf6f0;
+    color: #6b5b3e;
+    border: 1px solid #d4c5a9;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.scan-nav button:hover:not(:disabled) {
+    background: #f0ece4;
+    border-color: #b0a080;
+}
+.scan-nav button:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+.scan-label {
+    font-size: 0.75rem;
+    color: #a09070;
+    margin-top: 0.4rem;
+}
+
+/* Lightbox */
+.lightbox-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.lightbox-overlay.active {
+    display: flex;
+}
+.lightbox-overlay img {
+    max-width: 95vw;
+    max-height: 95vh;
+    object-fit: contain;
+    border-radius: 4px;
+    cursor: default;
+}
+
+.entry-actions-viewer {
+    display: flex;
+    gap: 0.4rem;
+    flex-shrink: 0;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 900px) {
+    .entry-with-scan {
+        flex-direction: column;
+    }
+    .scan-panel {
+        flex: none;
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    .container.scan-expanded {
+        max-width: 860px;
+    }
+}
+@media (max-width: 600px) {
+    .container { padding: 1rem; }
+    header h1 { font-size: 1.5rem; }
+    .card-grid { grid-template-columns: 1fr; }
+    .entry { padding: 1rem; }
+    .entry-header { flex-direction: column; }
+    .toolbar { flex-direction: column; }
+    .search-box { max-width: 100%; }
+    .corrections-panel { width: 100%; max-width: 100%; }
+    .nav-btn { padding: 0.2rem 0.45rem; font-size: 0.75rem; }
+    .entry-actions-viewer { flex-wrap: wrap; }
+}
+
+.hidden { display: none !important; }
+</style>
+<script src="config.js"></script>
+<script src="diary_data.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Leigh's Diary</h1>
+        <div class="subtitle">OCR transcription &mdash; May 1978 to October 1979</div>
+        <div class="toolbar">
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Search diary entries...">
+                <button class="search-clear" id="search-clear">&times;</button>
+            </div>
+            <button class="corrections-badge" id="corrections-toggle" title="View noted corrections">
+                Corrections <span class="count zero" id="corrections-count">0</span>
+            </button>
+        </div>
+    </header>
+
+    <div id="nav-bar" class="nav-bar" style="display:none;"></div>
+
+    <div id="search-results" class="search-results"></div>
+    <div id="app">
+        <div class="stats" style="text-align:center;color:#a09070;">Loading...</div>
+    </div>
+</div>
+
+<!-- Selection popup -->
+<div class="selection-popup" id="selection-popup">Note Correction</div>
+
+<!-- Correction input modal -->
+<div class="modal-overlay" id="correction-modal">
+    <div class="correction-modal">
+        <h3>Note a Correction</h3>
+        <div class="correction-context" id="correction-context"></div>
+        <label for="correction-comment">Your correction or comment:</label>
+        <textarea id="correction-comment" placeholder="Describe what needs to be changed..."></textarea>
+        <div class="correction-actions">
+            <button class="btn btn-cancel" onclick="closeCorrectionModal()">Cancel</button>
+            <button class="btn btn-save" onclick="saveCorrection()">Save</button>
+        </div>
+    </div>
+</div>
+
+<!-- Corrections panel (slide-in from right) -->
+<div class="corrections-panel" id="corrections-panel">
+    <div class="corrections-panel-header">
+        <h3>Corrections</h3>
+        <button class="corrections-panel-close" onclick="toggleCorrectionsPanel()">&times;</button>
+    </div>
+    <div class="corrections-list" id="corrections-list"></div>
+    <div class="corrections-panel-footer">
+        <button class="btn-download" onclick="downloadCorrections()">Download All</button>
+        <button class="btn-clear-all" onclick="clearAllCorrections()">Clear All</button>
+    </div>
+</div>
+
+<!-- Toast notification -->
+<div class="toast" id="toast"></div>
+
+<!-- Lightbox overlay for full-res scan viewing -->
+<div class="lightbox-overlay" id="lightbox-overlay" onclick="closeLightbox(event)">
+    <img id="lightbox-img" alt="Full resolution page scan">
+</div>
+
+<script>
+/* ================================================================
+   DATA
+   ================================================================ */
+/* DIARY_DATA can be set by:
+   1. External <script src="diary_data.js"> which sets window.DIARY_DATA
+   2. Inline embedding by build_standalone_viewer.py (replaces the null below)
+*/
+const DIARY_DATA = window.DIARY_DATA || null;
+
+/* ================================================================
+   STATE
+   ================================================================ */
+let diaryData = null;
+let currentView = 'home';
+let currentYear = null;
+let currentMonth = null;
+let searchTerm = '';
+let corrections = [];
+let pendingCorrection = null; // {entryIndex, selectedText}
+let scanManifest = null;
+let scanBaseUrl = '';
+
+const MONTH_NAMES = {
+    1:'January',2:'February',3:'March',4:'April',5:'May',6:'June',
+    7:'July',8:'August',9:'September',10:'October',11:'November',12:'December'
+};
+const STORAGE_KEY = 'diary_corrections_v1';
+
+/* ================================================================
+   INIT
+   ================================================================ */
+function init() {
+    diaryData = DIARY_DATA;
+    if (!diaryData) {
+        document.getElementById('app').innerHTML =
+            '<div class="stats" style="color:#a05050;">No diary data embedded. Rebuild with build_standalone_viewer.py</div>';
+        return;
+    }
+
+    loadScanManifest();
+    loadCorrections();
+    updateCorrectionsBadge();
+
+    // Search
+    const searchInput = document.getElementById('search-input');
+    let debounceTimer;
+    searchInput.addEventListener('input', function() {
+        clearTimeout(debounceTimer);
+        const val = this.value.trim();
+        document.getElementById('search-clear').classList.toggle('visible', val.length > 0);
+        debounceTimer = setTimeout(() => {
+            if (val.length >= 2) {
+                performSearch(val);
+            } else {
+                clearSearch();
+            }
+        }, 250);
+    });
+    searchInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            this.value = '';
+            document.getElementById('search-clear').classList.remove('visible');
+            clearSearch();
+            this.blur();
+        }
+    });
+    document.getElementById('search-clear').addEventListener('click', function() {
+        searchInput.value = '';
+        this.classList.remove('visible');
+        clearSearch();
+    });
+
+    // Corrections panel toggle
+    document.getElementById('corrections-toggle').addEventListener('click', toggleCorrectionsPanel);
+
+    // Selection popup
+    document.addEventListener('mouseup', handleTextSelection);
+    document.addEventListener('mousedown', function(e) {
+        const popup = document.getElementById('selection-popup');
+        if (!popup.contains(e.target)) {
+            popup.style.display = 'none';
+        }
+    });
+    document.getElementById('selection-popup').addEventListener('click', startCorrectionFromSelection);
+
+    // Correction modal close on overlay click
+    document.getElementById('correction-modal').addEventListener('click', function(e) {
+        if (e.target === this) closeCorrectionModal();
+    });
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            if (document.getElementById('lightbox-overlay').classList.contains('active')) {
+                closeLightbox();
+            } else if (document.getElementById('correction-modal').classList.contains('active')) {
+                closeCorrectionModal();
+            } else if (document.getElementById('corrections-panel').classList.contains('active')) {
+                toggleCorrectionsPanel();
+            }
+        }
+        // Ctrl+F or Cmd+F to focus search (optional enhancement)
+        if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+            // Let browser default handle it, or we could override
+        }
+    });
+
+    showHome();
+}
+
+/* ================================================================
+   HTML HELPERS
+   ================================================================ */
+function escHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}
+
+function highlightText(text, term) {
+    if (!term) return escHtml(text);
+    const escaped = escHtml(text);
+    const termEsc = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const re = new RegExp('(' + termEsc + ')', 'gi');
+    return escaped.replace(re, '<mark>$1</mark>');
+}
+
+function showToast(message) {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+/* ================================================================
+   NAVIGATION
+   ================================================================ */
+function getAllMonths() {
+    const months = [];
+    for (const yd of diaryData.years) {
+        for (const md of yd.months) {
+            months.push({ year: yd.year, month: md.month, month_name: md.month_name });
+        }
+    }
+    return months;
+}
+
+function getAdjacentMonths(year, month) {
+    const all = getAllMonths();
+    const idx = all.findIndex(m => m.year === year && m.month === month);
+    return {
+        prev: idx > 0 ? all[idx - 1] : null,
+        next: idx >= 0 && idx < all.length - 1 ? all[idx + 1] : null,
+    };
+}
+
+function getMonthsForYear(year) {
+    const yd = diaryData.years.find(y => y.year === year);
+    if (!yd) return new Set();
+    return new Set(yd.months.map(m => m.month));
+}
+
+function updateNavBar() {
+    const bar = document.getElementById('nav-bar');
+    if (!diaryData || !diaryData.years || diaryData.years.length === 0) {
+        bar.style.display = 'none';
+        return;
+    }
+    bar.style.display = '';
+    const MONTH_ABBR = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+    const yearAllActive = currentView === 'home';
+    let yearRow = `<button class="nav-btn${yearAllActive ? ' nav-btn-active' : ''}" onclick="showHome()">All</button>`;
+    for (const yd of diaryData.years) {
+        const isActive = yd.year === currentYear;
+        yearRow += `<button class="nav-btn${isActive ? ' nav-btn-active' : ''}" onclick="navToYear(${yd.year})">${yd.year}</button>`;
+    }
+
+    const ctxYear = currentYear || diaryData.years[0].year;
+    const availMonths = getMonthsForYear(ctxYear);
+    const monthAllActive = currentYear && !currentMonth;
+    let monthRow = `<button class="nav-btn${monthAllActive ? ' nav-btn-active' : ''}" onclick="showYear(${ctxYear})">All</button>`;
+    for (let m = 1; m <= 12; m++) {
+        const has = availMonths.has(m);
+        const isActive = m === currentMonth && ctxYear === currentYear;
+        const cls = isActive ? ' nav-btn-active' : (!has ? ' nav-btn-disabled' : '');
+        if (has) {
+            monthRow += `<button class="nav-btn${cls}" onclick="showMonth(${ctxYear}, ${m})">${MONTH_ABBR[m-1]}</button>`;
+        } else {
+            monthRow += `<span class="nav-btn${cls}">${MONTH_ABBR[m-1]}</span>`;
+        }
+    }
+
+    bar.innerHTML = `<div class="nav-row">${yearRow}</div><div class="nav-row">${monthRow}</div>`;
+}
+
+function navToYear(year) {
+    if (currentMonth) {
+        const months = getMonthsForYear(year);
+        if (months.has(currentMonth)) {
+            showMonth(year, currentMonth);
+            return;
+        }
+    }
+    showYear(year);
+}
+
+function showHome() {
+    currentView = 'home';
+    currentYear = null;
+    currentMonth = null;
+    searchTerm = '';
+    updateNavBar();
+    const app = document.getElementById('app');
+
+    let totalEntries = 0;
+    let cards = '';
+    for (const yd of diaryData.years) {
+        let entryCount = 0;
+        for (const m of yd.months) entryCount += m.entries.length;
+        totalEntries += entryCount;
+
+        const summary = (diaryData.summaries.years || {})[String(yd.year)] || '';
+        cards += `
+        <div class="card" onclick="showYear(${yd.year})">
+            <div class="card-title">${yd.year}</div>
+            <div class="card-meta">${yd.months.length} months, ${entryCount} entries</div>
+            <div class="card-summary">${escHtml(summary)}</div>
+        </div>`;
+    }
+
+    if (diaryData.undated && diaryData.undated.length > 0) {
+        cards += `
+        <div class="card card-undated" onclick="showUndated()">
+            <div class="card-title">Undated</div>
+            <div class="card-meta">${diaryData.undated.length} fragments</div>
+            <div class="card-summary">Text fragments where no date could be identified</div>
+        </div>`;
+    }
+
+    app.innerHTML = `
+        <h2>Years</h2>
+        <div class="card-grid">${cards}</div>
+        <div class="stats">${totalEntries} diary entries across ${diaryData.years.length} years, transcribed from handwritten pages</div>
+    `;
+    app.style.display = '';
+    window.scrollTo(0, 0);
+}
+
+function showYear(year) {
+    currentView = 'year';
+    currentYear = year;
+    currentMonth = null;
+    updateNavBar();
+    const app = document.getElementById('app');
+    const yd = diaryData.years.find(y => y.year === year);
+    if (!yd) return;
+
+    let cards = '';
+    for (const md of yd.months) {
+        const monthKey = `${year}-${String(md.month).padStart(2, '0')}`;
+        const summary = (diaryData.summaries.months || {})[monthKey] || '';
+        cards += `
+        <div class="card" onclick="showMonth(${year}, ${md.month})">
+            <div class="card-title">${md.month_name}</div>
+            <div class="card-meta">${md.entries.length} entries</div>
+            <div class="card-summary">${escHtml(summary)}</div>
+        </div>`;
+    }
+
+    app.innerHTML = `
+        <div class="breadcrumb">
+            <a onclick="showHome()">Years</a>
+            <span class="sep">&rsaquo;</span>
+            <span class="current">${year}</span>
+        </div>
+        <h2>${year}</h2>
+        <div class="card-grid">${cards}</div>
+    `;
+    app.style.display = '';
+    window.scrollTo(0, 0);
+}
+
+function showMonth(year, month, scrollToEntryIdx) {
+    currentView = 'month';
+    currentYear = year;
+    currentMonth = month;
+    updateNavBar();
+    const app = document.getElementById('app');
+    const yd = diaryData.years.find(y => y.year === year);
+    if (!yd) return;
+    const md = yd.months.find(m => m.month === month);
+    if (!md) return;
+
+    const monthKey = `${year}-${String(month).padStart(2, '0')}`;
+    const summary = (diaryData.summaries.months || {})[monthKey] || '';
+    const summaryHtml = summary ? `<div class="month-summary">${escHtml(summary)}</div>` : '';
+
+    let entriesHtml = '';
+    for (const entry of md.entries) {
+        entriesHtml += renderEntry(entry, searchTerm);
+    }
+
+    const adj = getAdjacentMonths(year, month);
+    const prevBtn = adj.prev
+        ? `<button onclick="showMonth(${adj.prev.year}, ${adj.prev.month})">&larr; ${adj.prev.month_name} ${adj.prev.year}</button>`
+        : `<button disabled>&larr;</button>`;
+    const nextBtn = adj.next
+        ? `<button onclick="showMonth(${adj.next.year}, ${adj.next.month})">${adj.next.month_name} ${adj.next.year} &rarr;</button>`
+        : `<button disabled>&rarr;</button>`;
+
+    app.innerHTML = `
+        <div class="breadcrumb">
+            <a onclick="showHome()">Years</a>
+            <span class="sep">&rsaquo;</span>
+            <a onclick="showYear(${year})">${year}</a>
+            <span class="sep">&rsaquo;</span>
+            <span class="current">${md.month_name} ${year}</span>
+        </div>
+        <h2>${md.month_name} ${year}</h2>
+        ${summaryHtml}
+        ${entriesHtml}
+        <div class="month-nav">${prevBtn}${nextBtn}</div>
+    `;
+    app.style.display = '';
+
+    if (scrollToEntryIdx !== undefined) {
+        setTimeout(() => {
+            const el = document.getElementById('entry-' + scrollToEntryIdx);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
+    } else {
+        window.scrollTo(0, 0);
+    }
+}
+
+function showUndated() {
+    currentView = 'undated';
+    updateNavBar();
+    const app = document.getElementById('app');
+    if (!diaryData.undated || diaryData.undated.length === 0) return;
+
+    let entriesHtml = '';
+    for (const entry of diaryData.undated) {
+        entriesHtml += renderEntry(entry, searchTerm);
+    }
+
+    app.innerHTML = `
+        <div class="breadcrumb">
+            <a onclick="showHome()">Years</a>
+            <span class="sep">&rsaquo;</span>
+            <span class="current">Undated</span>
+        </div>
+        <h2>Undated Fragments</h2>
+        ${entriesHtml}
+    `;
+    app.style.display = '';
+    window.scrollTo(0, 0);
+}
+
+function renderEntry(entry, highlight) {
+    const idx = entry.index;
+    const pageRef = entry.page_ids.map(p => 'p.' + p).join(', ');
+
+    const paragraphs = entry.text.split('\n\n');
+    const textHtml = paragraphs
+        .filter(p => p.trim())
+        .map(p => '<p>' + (highlight ? highlightText(p.trim(), highlight) : escHtml(p.trim())) + '</p>')
+        .join('');
+
+    const originalDate = entry.date_str
+        ? ` <span class="original-date">(written as: ${escHtml(entry.date_str)})</span>`
+        : '';
+
+    const hasScan = scanManifest && entry.page_ids.some(pid => scanManifest[String(pid)]);
+    const scanBtn = hasScan
+        ? `<button class="btn btn-note" onclick="toggleScan(${idx})" title="Show/hide page scan">Show Scan</button>`
+        : '';
+
+    return `
+    <div class="entry" id="entry-${idx}" data-entry-index="${idx}">
+        <div class="entry-header">
+            <div class="entry-date">${escHtml(entry.date_display)}${originalDate}</div>
+            <div class="entry-actions-viewer">
+                ${scanBtn}
+                <button class="btn btn-note" onclick="startCorrectionForEntry(${idx})" title="Note a correction for this entry">Note Correction</button>
+            </div>
+        </div>
+        <div class="entry-pages">Pages: ${escHtml(pageRef)}</div>
+        <div class="entry-text" data-entry-index="${idx}">${textHtml}</div>
+    </div>`;
+}
+
+function findEntry(idx) {
+    for (const yd of diaryData.years) {
+        for (const md of yd.months) {
+            for (const entry of md.entries) {
+                if (entry.index === idx) return entry;
+            }
+        }
+    }
+    if (diaryData.undated) {
+        for (const entry of diaryData.undated) {
+            if (entry.index === idx) return entry;
+        }
+    }
+    return null;
+}
+
+function findEntryMonthYear(idx) {
+    for (const yd of diaryData.years) {
+        for (const md of yd.months) {
+            for (const entry of md.entries) {
+                if (entry.index === idx) return { year: yd.year, month: md.month, month_name: md.month_name };
+            }
+        }
+    }
+    return null;
+}
+
+/* ================================================================
+   SEARCH
+   ================================================================ */
+function performSearch(term) {
+    searchTerm = term;
+    const lower = term.toLowerCase();
+    const results = [];
+
+    for (const yd of diaryData.years) {
+        for (const md of yd.months) {
+            for (const entry of md.entries) {
+                if (entry.text.toLowerCase().includes(lower)) {
+                    results.push({
+                        entry: entry,
+                        year: yd.year,
+                        month: md.month,
+                        month_name: md.month_name,
+                    });
+                }
+            }
+        }
+    }
+    if (diaryData.undated) {
+        for (const entry of diaryData.undated) {
+            if (entry.text.toLowerCase().includes(lower)) {
+                results.push({ entry: entry, year: null, month: null, month_name: 'Undated' });
+            }
+        }
+    }
+
+    renderSearchResults(results, term);
+}
+
+function renderSearchResults(results, term) {
+    const container = document.getElementById('search-results');
+    const app = document.getElementById('app');
+
+    if (results.length === 0) {
+        container.innerHTML = `
+            <div class="search-results-header">
+                <span>No entries found for "${escHtml(term)}"</span>
+                <a onclick="clearSearch()">Clear search</a>
+            </div>`;
+        container.classList.add('active');
+        app.style.display = 'none';
+        return;
+    }
+
+    let html = `
+        <div class="search-results-header">
+            <span>${results.length} ${results.length === 1 ? 'entry' : 'entries'} matching "${escHtml(term)}"</span>
+            <a onclick="clearSearch()">Clear search</a>
+        </div>`;
+
+    for (const r of results) {
+        const entry = r.entry;
+        const text = entry.text;
+        const lowerText = text.toLowerCase();
+        const lowerTerm = term.toLowerCase();
+        const matchIdx = lowerText.indexOf(lowerTerm);
+
+        // Extract snippet around match
+        let start = Math.max(0, matchIdx - 80);
+        let end = Math.min(text.length, matchIdx + term.length + 80);
+        if (start > 0) {
+            const spaceIdx = text.indexOf(' ', start);
+            if (spaceIdx > start && spaceIdx < matchIdx) start = spaceIdx + 1;
+        }
+        if (end < text.length) {
+            const spaceIdx = text.lastIndexOf(' ', end);
+            if (spaceIdx > matchIdx + term.length) end = spaceIdx;
+        }
+        let snippet = text.substring(start, end);
+        if (start > 0) snippet = '...' + snippet;
+        if (end < text.length) snippet = snippet + '...';
+
+        const monthLabel = r.year ? `${r.month_name} ${r.year}` : 'Undated';
+
+        let onclick;
+        if (r.year) {
+            onclick = `navigateToEntry(${r.year}, ${r.month}, ${entry.index})`;
+        } else {
+            onclick = `navigateToUndatedEntry(${entry.index})`;
+        }
+
+        html += `
+        <div class="search-result-item" onclick="${onclick}">
+            <div class="search-result-date">${escHtml(entry.date_display)}</div>
+            <div class="search-result-month">${escHtml(monthLabel)} &middot; Pages: ${entry.page_ids.map(p => 'p.' + p).join(', ')}</div>
+            <div class="search-result-snippet">${highlightText(snippet, term)}</div>
+        </div>`;
+    }
+
+    container.innerHTML = html;
+    container.classList.add('active');
+    app.style.display = 'none';
+}
+
+function clearSearch() {
+    searchTerm = '';
+    document.getElementById('search-results').classList.remove('active');
+    document.getElementById('search-results').innerHTML = '';
+    document.getElementById('app').style.display = '';
+}
+
+function navigateToEntry(year, month, entryIdx) {
+    const keepTerm = searchTerm;
+    document.getElementById('search-results').classList.remove('active');
+    document.getElementById('search-results').innerHTML = '';
+    document.getElementById('app').style.display = '';
+    searchTerm = keepTerm;
+    showMonth(year, month, entryIdx);
+}
+
+function navigateToUndatedEntry(entryIdx) {
+    clearSearch();
+    document.getElementById('search-input').value = '';
+    document.getElementById('search-clear').classList.remove('visible');
+    showUndated();
+    setTimeout(() => {
+        const el = document.getElementById('entry-' + entryIdx);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 100);
+}
+
+/* ================================================================
+   TEXT SELECTION → CORRECTION
+   ================================================================ */
+function handleTextSelection(e) {
+    const popup = document.getElementById('selection-popup');
+    const sel = window.getSelection();
+    if (!sel || sel.isCollapsed || !sel.toString().trim()) {
+        return;
+    }
+
+    // Check if selection is within an entry-text element
+    const anchorEl = sel.anchorNode && sel.anchorNode.nodeType === 3
+        ? sel.anchorNode.parentElement : sel.anchorNode;
+    const entryTextEl = anchorEl ? anchorEl.closest('.entry-text') : null;
+    if (!entryTextEl) return;
+
+    const entryIdx = parseInt(entryTextEl.getAttribute('data-entry-index'));
+    if (isNaN(entryIdx)) return;
+
+    // Position popup near cursor
+    const range = sel.getRangeAt(0);
+    const rect = range.getBoundingClientRect();
+    popup.style.left = (rect.left + rect.width / 2 - 60 + window.scrollX) + 'px';
+    popup.style.top = (rect.top - 40 + window.scrollY) + 'px';
+    popup.style.display = 'block';
+    popup.setAttribute('data-entry-index', entryIdx);
+    popup.setAttribute('data-selected-text', sel.toString().trim());
+}
+
+function startCorrectionFromSelection() {
+    const popup = document.getElementById('selection-popup');
+    const entryIdx = parseInt(popup.getAttribute('data-entry-index'));
+    const selectedText = popup.getAttribute('data-selected-text') || '';
+    popup.style.display = 'none';
+    window.getSelection().removeAllRanges();
+    openCorrectionModal(entryIdx, selectedText);
+}
+
+/* ================================================================
+   CORRECTION MODAL
+   ================================================================ */
+function startCorrectionForEntry(idx) {
+    // Check for text selection within this entry
+    const sel = window.getSelection();
+    let selectedText = '';
+    if (sel && !sel.isCollapsed) {
+        const anchorEl = sel.anchorNode && sel.anchorNode.nodeType === 3
+            ? sel.anchorNode.parentElement : sel.anchorNode;
+        const entryTextEl = anchorEl ? anchorEl.closest('.entry-text') : null;
+        if (entryTextEl && parseInt(entryTextEl.getAttribute('data-entry-index')) === idx) {
+            selectedText = sel.toString().trim();
+        }
+    }
+    openCorrectionModal(idx, selectedText);
+}
+
+function openCorrectionModal(entryIdx, selectedText) {
+    const entry = findEntry(entryIdx);
+    if (!entry) return;
+
+    pendingCorrection = { entryIndex: entryIdx, selectedText: selectedText || '' };
+
+    const pageRef = entry.page_ids.map(p => 'p.' + p).join(', ');
+    let contextHtml = `
+        <div class="label">Entry</div>
+        <div class="value">${escHtml(entry.date_display)}</div>
+        <div class="label">Pages</div>
+        <div class="value">${escHtml(pageRef)}</div>`;
+
+    if (selectedText) {
+        contextHtml += `
+        <div class="label">Selected text</div>
+        <div class="value"><blockquote>${escHtml(selectedText)}</blockquote></div>`;
+    }
+
+    document.getElementById('correction-context').innerHTML = contextHtml;
+    document.getElementById('correction-comment').value = '';
+    document.getElementById('correction-modal').classList.add('active');
+
+    setTimeout(() => document.getElementById('correction-comment').focus(), 100);
+
+    // Enter to save (Ctrl+Enter), Escape to cancel
+    const textarea = document.getElementById('correction-comment');
+    textarea.onkeydown = function(e) {
+        if (e.ctrlKey && e.key === 'Enter') {
+            e.preventDefault();
+            saveCorrection();
+        }
+        if (e.key === 'Escape') {
+            e.preventDefault();
+            closeCorrectionModal();
+        }
+    };
+}
+
+function closeCorrectionModal() {
+    document.getElementById('correction-modal').classList.remove('active');
+    pendingCorrection = null;
+}
+
+function saveCorrection() {
+    if (!pendingCorrection) return;
+    const comment = document.getElementById('correction-comment').value.trim();
+    if (!comment) {
+        document.getElementById('correction-comment').focus();
+        return;
+    }
+
+    const entry = findEntry(pendingCorrection.entryIndex);
+    if (!entry) return;
+
+    const correction = {
+        id: Date.now() + '_' + Math.random().toString(36).substr(2, 6),
+        timestamp: new Date().toISOString(),
+        entryIndex: pendingCorrection.entryIndex,
+        entryDate: entry.date_display,
+        dateStr: entry.date_str,
+        pageRef: entry.page_ids.map(p => 'p.' + p).join(', '),
+        selectedText: pendingCorrection.selectedText,
+        comment: comment,
+    };
+
+    corrections.push(correction);
+    saveCorrectionsToStorage();
+    updateCorrectionsBadge();
+    closeCorrectionModal();
+    showToast('Correction noted');
+}
+
+/* ================================================================
+   CORRECTIONS STORAGE & PANEL
+   ================================================================ */
+function loadCorrections() {
+    try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) corrections = JSON.parse(stored);
+    } catch (e) {
+        corrections = [];
+    }
+}
+
+function saveCorrectionsToStorage() {
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(corrections));
+    } catch (e) {
+        // localStorage might be full or unavailable
+    }
+}
+
+function updateCorrectionsBadge() {
+    const countEl = document.getElementById('corrections-count');
+    countEl.textContent = corrections.length;
+    countEl.classList.toggle('zero', corrections.length === 0);
+}
+
+function toggleCorrectionsPanel() {
+    const panel = document.getElementById('corrections-panel');
+    const isActive = panel.classList.contains('active');
+    if (isActive) {
+        panel.classList.remove('active');
+    } else {
+        renderCorrectionsList();
+        panel.classList.add('active');
+    }
+}
+
+function renderCorrectionsList() {
+    const list = document.getElementById('corrections-list');
+    if (corrections.length === 0) {
+        list.innerHTML = `
+            <div class="corrections-empty">
+                No corrections noted yet.<br><br>
+                Select text in any entry and click "Note Correction",<br>
+                or use the button on each entry card.
+            </div>`;
+        return;
+    }
+
+    let html = '';
+    for (let i = corrections.length - 1; i >= 0; i--) {
+        const c = corrections[i];
+        const time = new Date(c.timestamp);
+        const timeStr = time.toLocaleDateString('en-AU', {
+            day: 'numeric', month: 'short', year: 'numeric',
+            hour: '2-digit', minute: '2-digit',
+        });
+
+        html += `
+        <div class="correction-item">
+            <button class="correction-item-delete" onclick="deleteCorrection('${c.id}')" title="Delete">&times;</button>
+            <div class="correction-item-date">${escHtml(c.entryDate)}</div>
+            <div class="correction-item-pages">Pages: ${escHtml(c.pageRef)}</div>
+            ${c.selectedText ? `<div class="correction-item-selected">"${escHtml(c.selectedText)}"</div>` : ''}
+            <div class="correction-item-comment">${escHtml(c.comment)}</div>
+            <div class="correction-item-time">${escHtml(timeStr)}</div>
+        </div>`;
+    }
+    list.innerHTML = html;
+}
+
+function deleteCorrection(id) {
+    corrections = corrections.filter(c => c.id !== id);
+    saveCorrectionsToStorage();
+    updateCorrectionsBadge();
+    renderCorrectionsList();
+}
+
+function clearAllCorrections() {
+    if (corrections.length === 0) return;
+    if (!confirm(`Delete all ${corrections.length} corrections? This cannot be undone.`)) return;
+    corrections = [];
+    saveCorrectionsToStorage();
+    updateCorrectionsBadge();
+    renderCorrectionsList();
+    showToast('All corrections cleared');
+}
+
+/* ================================================================
+   SCAN PANEL
+   ================================================================ */
+function loadScanManifest() {
+    // Try loading from external config (GitHub Pages) or relative path
+    const baseUrl = (typeof SCAN_BASE_URL !== 'undefined') ? SCAN_BASE_URL : '';
+    const manifestUrl = 'data/scan_manifest.json';
+    fetch(manifestUrl).then(r => {
+        if (!r.ok) throw new Error('Not found');
+        return r.json();
+    }).then(data => {
+        scanManifest = data.pages;
+        scanBaseUrl = baseUrl || data.base_url || '';
+    }).catch(() => {
+        // Manifest not available — scan buttons won't show
+        scanManifest = null;
+    });
+}
+
+function toggleScan(entryIdx) {
+    const entryEl = document.getElementById('entry-' + entryIdx);
+    if (!entryEl) return;
+
+    const existing = entryEl.querySelector('.scan-panel');
+    if (existing) {
+        // Remove scan panel, unwrap content
+        existing.remove();
+        const contentWrapper = entryEl.querySelector('.entry-content');
+        if (contentWrapper) {
+            // Move children back to entry
+            while (contentWrapper.firstChild) {
+                entryEl.insertBefore(contentWrapper.firstChild, contentWrapper);
+            }
+            contentWrapper.remove();
+        }
+        entryEl.classList.remove('entry-with-scan');
+        updateContainerWidth();
+        return;
+    }
+
+    // Find entry data
+    const entry = findEntry(entryIdx);
+    if (!entry || !scanManifest) return;
+
+    // Get pages that have scans
+    const scanPages = entry.page_ids.filter(pid => scanManifest[String(pid)]);
+    if (scanPages.length === 0) return;
+
+    // Wrap existing content
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'entry-content';
+    while (entryEl.firstChild) {
+        contentDiv.appendChild(entryEl.firstChild);
+    }
+    entryEl.appendChild(contentDiv);
+
+    // Build and append scan panel
+    const panel = buildScanPanel(scanPages, 0);
+    entryEl.appendChild(panel);
+    entryEl.classList.add('entry-with-scan');
+    updateContainerWidth();
+}
+
+function buildScanPanel(pageIds, currentIdx) {
+    const panel = document.createElement('div');
+    panel.className = 'scan-panel';
+
+    const pid = pageIds[currentIdx];
+    const info = scanManifest[String(pid)];
+    const thumbUrl = scanBaseUrl + '/' + info.thumb;
+    const fullUrl = scanBaseUrl + '/' + info.full;
+
+    let html = `<img class="scan-thumb" src="${thumbUrl}" alt="Page ${pid} scan"
+                     onclick="openLightbox('${fullUrl}')"
+                     title="Click for full resolution">`;
+
+    if (pageIds.length > 1) {
+        html += `<div class="scan-nav">
+            <button onclick="navScan(this, -1)" ${currentIdx === 0 ? 'disabled' : ''}
+                    data-pages='${JSON.stringify(pageIds)}' data-idx="${currentIdx}">&larr;</button>
+            <span>Page ${currentIdx + 1} of ${pageIds.length}</span>
+            <button onclick="navScan(this, 1)" ${currentIdx >= pageIds.length - 1 ? 'disabled' : ''}
+                    data-pages='${JSON.stringify(pageIds)}' data-idx="${currentIdx}">&rarr;</button>
+        </div>`;
+    }
+
+    html += `<div class="scan-label">p.${pid}</div>`;
+    panel.innerHTML = html;
+    return panel;
+}
+
+function navScan(btn, dir) {
+    const pageIds = JSON.parse(btn.getAttribute('data-pages'));
+    const currentIdx = parseInt(btn.getAttribute('data-idx'));
+    const newIdx = currentIdx + dir;
+    if (newIdx < 0 || newIdx >= pageIds.length) return;
+
+    const panel = btn.closest('.scan-panel');
+    const entryEl = panel.closest('.entry');
+    const newPanel = buildScanPanel(pageIds, newIdx);
+    entryEl.replaceChild(newPanel, panel);
+}
+
+function openLightbox(fullUrl) {
+    const overlay = document.getElementById('lightbox-overlay');
+    document.getElementById('lightbox-img').src = fullUrl;
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox(e) {
+    if (e && e.target.tagName === 'IMG') return; // Don't close when clicking image
+    document.getElementById('lightbox-overlay').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function updateContainerWidth() {
+    const container = document.querySelector('.container');
+    const hasOpenScan = document.querySelector('.entry-with-scan');
+    container.classList.toggle('scan-expanded', !!hasOpenScan);
+}
+
+/* ================================================================
+   DOWNLOAD CORRECTIONS
+   ================================================================ */
+function downloadCorrections() {
+    if (corrections.length === 0) {
+        showToast('No corrections to download');
+        return;
+    }
+
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('en-AU', {
+        weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
+    });
+    const timeStr = now.toLocaleTimeString('en-AU', {
+        hour: '2-digit', minute: '2-digit',
+    });
+
+    let text = '';
+    text += '================================================================\n';
+    text += 'DIARY CORRECTIONS\n';
+    text += '================================================================\n';
+    text += `Exported: ${dateStr} at ${timeStr}\n`;
+    text += `Total corrections: ${corrections.length}\n`;
+    text += '\n';
+
+    for (let i = 0; i < corrections.length; i++) {
+        const c = corrections[i];
+        const cTime = new Date(c.timestamp);
+        const cTimeStr = cTime.toLocaleDateString('en-AU', {
+            day: 'numeric', month: 'short', year: 'numeric',
+            hour: '2-digit', minute: '2-digit',
+        });
+
+        text += '----------------------------------------------------------------\n';
+        text += `CORRECTION ${i + 1}\n`;
+        text += `Entry: ${c.entryDate}`;
+        if (c.dateStr) text += ` (written as: ${c.dateStr})`;
+        text += '\n';
+        text += `Pages: ${c.pageRef}\n`;
+        if (c.selectedText) {
+            text += `Selected text: "${c.selectedText}"\n`;
+        }
+        text += `Comment: ${c.comment}\n`;
+        text += `Noted: ${cTimeStr}\n`;
+        text += '\n';
+    }
+
+    text += '----------------------------------------------------------------\n';
+    text += 'END OF CORRECTIONS\n';
+    text += '================================================================\n';
+
+    const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'diary_corrections.txt';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    showToast('Corrections downloaded');
+}
+
+/* ================================================================
+   START
+   ================================================================ */
+init();
+</script>
+</body>
+</html>
