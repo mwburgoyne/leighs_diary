@@ -70,8 +70,8 @@
       "full": "full/1978-07-24_p1.webp"
     },
     "18": {
-      "thumb": "thumb/1978-07-24_p2.webp",
-      "full": "full/1978-07-24_p2.webp"
+      "thumb": "thumb/1978-07-30_p1.webp",
+      "full": "full/1978-07-30_p1.webp"
     },
     "19": {
       "thumb": "thumb/1978-08-13_p1.webp",
@@ -270,12 +270,12 @@
       "full": "full/1979-05-16_p2.webp"
     },
     "68": {
-      "thumb": "thumb/undated_p68.webp",
-      "full": "full/undated_p68.webp"
+      "thumb": "thumb/1979-05-16_p3.webp",
+      "full": "full/1979-05-16_p3.webp"
     },
     "69": {
-      "thumb": "thumb/1979-05-29_p1.webp",
-      "full": "full/1979-05-29_p1.webp"
+      "thumb": "thumb/1979-05-21_p1.webp",
+      "full": "full/1979-05-21_p1.webp"
     },
     "70": {
       "thumb": "thumb/1979-06-02_p1.webp",
@@ -420,6 +420,10 @@
     "105": {
       "thumb": "thumb/1979-10-22_p2.webp",
       "full": "full/1979-10-22_p2.webp"
+    },
+    "106": {
+      "thumb": "thumb/1978-07-30_p2.webp",
+      "full": "full/1978-07-30_p2.webp"
     }
   }
 }
