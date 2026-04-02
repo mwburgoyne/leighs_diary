@@ -678,94 +678,73 @@ h2 {
 }
 
 /* ===== Scan Panel ===== */
-.container {
-    transition: max-width 0.3s ease;
-}
-.container.scan-expanded {
-    max-width: 1280px;
-}
-.entry-with-scan {
-    display: flex;
-    gap: 1.2rem;
-    align-items: flex-start;
-}
-.entry-content {
-    flex: 1;
-    min-width: 0;
-}
-.scan-panel {
-    flex: 0 0 340px;
-    background: #f5f0e6;
-    border: 1px solid #e0d5c0;
-    border-radius: 8px;
-    padding: 0.8rem;
-    text-align: center;
-}
-.scan-thumb {
-    max-width: 100%;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: opacity 0.15s;
-    border: 1px solid #e0d5c0;
-}
-.scan-thumb:hover {
-    opacity: 0.85;
-}
-.scan-nav {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-    margin-top: 0.5rem;
-    font-size: 0.8rem;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    color: #6b5b3e;
-}
-.scan-nav button {
-    padding: 0.2rem 0.6rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background: #faf6f0;
-    color: #6b5b3e;
-    border: 1px solid #d4c5a9;
-    border-radius: 4px;
-    cursor: pointer;
-}
-.scan-nav button:hover:not(:disabled) {
-    background: #f0ece4;
-    border-color: #b0a080;
-}
-.scan-nav button:disabled {
-    opacity: 0.3;
-    cursor: default;
-}
-.scan-label {
-    font-size: 0.75rem;
-    color: #a09070;
-    margin-top: 0.4rem;
-}
-
-/* Lightbox */
-.lightbox-overlay {
+/* Scan Lightbox Viewer */
+.scan-viewer {
     display: none;
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.92);
     z-index: 2000;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
 }
-.lightbox-overlay.active {
+.scan-viewer.active {
     display: flex;
 }
-.lightbox-overlay img {
-    max-width: 95vw;
-    max-height: 95vh;
+.scan-viewer img {
+    max-width: 90vw;
+    max-height: 88vh;
     object-fit: contain;
     border-radius: 4px;
-    cursor: default;
+    user-select: none;
+    -webkit-user-select: none;
+}
+.scan-close {
+    position: absolute;
+    top: 12px; right: 16px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 2rem;
+    cursor: pointer;
+    opacity: 0.7;
+    line-height: 1;
+    padding: 4px 10px;
+    z-index: 2010;
+}
+.scan-close:hover { opacity: 1; }
+.scan-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.12);
+    border: none;
+    color: #fff;
+    font-size: 2.2rem;
+    cursor: pointer;
+    opacity: 0.6;
+    padding: 16px 12px;
+    border-radius: 6px;
+    line-height: 1;
+    z-index: 2010;
+    user-select: none;
+    -webkit-user-select: none;
+}
+.scan-arrow:hover { opacity: 1; background: rgba(255,255,255,0.22); }
+.scan-arrow:disabled { opacity: 0.15; cursor: default; background: none; }
+.scan-arrow.left { left: 10px; }
+.scan-arrow.right { right: 10px; }
+.scan-page-label {
+    position: absolute;
+    bottom: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255,255,255,0.7);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 0.85rem;
+    z-index: 2010;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .entry-actions-viewer {
@@ -775,20 +754,6 @@ h2 {
 }
 
 /* ===== Responsive ===== */
-@media (max-width: 900px) {
-    .entry-with-scan {
-        flex-direction: column;
-    }
-    .scan-panel {
-        flex: none;
-        width: 100%;
-        max-width: 400px;
-        margin: 0 auto;
-    }
-    .container.scan-expanded {
-        max-width: 860px;
-    }
-}
 @media (max-width: 600px) {
     .container { padding: 1rem; }
     header h1 { font-size: 1.5rem; }
@@ -865,9 +830,13 @@ h2 {
 <!-- Toast notification -->
 <div class="toast" id="toast"></div>
 
-<!-- Lightbox overlay for full-res scan viewing -->
-<div class="lightbox-overlay" id="lightbox-overlay" onclick="closeLightbox(event)">
-    <img id="lightbox-img" alt="Full resolution page scan">
+<!-- Scan viewer overlay -->
+<div class="scan-viewer" id="scan-viewer">
+    <button class="scan-close" onclick="closeScanViewer()" title="Close">&times;</button>
+    <button class="scan-arrow left" id="scan-prev" onclick="navScanViewer(-1)">&lsaquo;</button>
+    <img id="scan-viewer-img" alt="Page scan">
+    <button class="scan-arrow right" id="scan-next" onclick="navScanViewer(1)">&rsaquo;</button>
+    <div class="scan-page-label" id="scan-page-label"></div>
 </div>
 
 <script>
@@ -963,19 +932,18 @@ function init() {
 
     // Keyboard shortcuts
     document.addEventListener('keydown', function(e) {
+        const scanOpen = document.getElementById('scan-viewer').classList.contains('active');
         if (e.key === 'Escape') {
-            if (document.getElementById('lightbox-overlay').classList.contains('active')) {
-                closeLightbox();
+            if (scanOpen) {
+                closeScanViewer();
             } else if (document.getElementById('correction-modal').classList.contains('active')) {
                 closeCorrectionModal();
             } else if (document.getElementById('corrections-panel').classList.contains('active')) {
                 toggleCorrectionsPanel();
             }
         }
-        // Ctrl+F or Cmd+F to focus search (optional enhancement)
-        if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
-            // Let browser default handle it, or we could override
-        }
+        if (scanOpen && e.key === 'ArrowLeft') { e.preventDefault(); navScanViewer(-1); }
+        if (scanOpen && e.key === 'ArrowRight') { e.preventDefault(); navScanViewer(1); }
     });
 
     showHome();
@@ -1247,7 +1215,7 @@ function renderEntry(entry, highlight) {
 
     const hasScan = scanManifest && (entry.scan_page_ids || entry.page_ids).some(pid => scanManifest[String(pid)]);
     const scanBtn = hasScan
-        ? `<button class="btn btn-note" onclick="toggleScan(${idx})" title="Show/hide page scan">Show Scan</button>`
+        ? `<button class="btn btn-note" onclick="toggleScan(${idx})" title="View page scan">Show Scan</button>`
         : '';
 
     return `
@@ -1652,107 +1620,49 @@ function loadScanManifest() {
     });
 }
 
+let scanViewerPages = [];
+let scanViewerIdx = 0;
+
 function toggleScan(entryIdx) {
-    const entryEl = document.getElementById('entry-' + entryIdx);
-    if (!entryEl) return;
-
-    const existing = entryEl.querySelector('.scan-panel');
-    if (existing) {
-        // Remove scan panel, unwrap content
-        existing.remove();
-        const contentWrapper = entryEl.querySelector('.entry-content');
-        if (contentWrapper) {
-            // Move children back to entry
-            while (contentWrapper.firstChild) {
-                entryEl.insertBefore(contentWrapper.firstChild, contentWrapper);
-            }
-            contentWrapper.remove();
-        }
-        entryEl.classList.remove('entry-with-scan');
-        updateContainerWidth();
-        return;
-    }
-
-    // Find entry data
     const entry = findEntry(entryIdx);
     if (!entry || !scanManifest) return;
 
-    // Get pages that have scans
     const scanPages = (entry.scan_page_ids || entry.page_ids).filter(pid => scanManifest[String(pid)]);
     if (scanPages.length === 0) return;
 
-    // Wrap existing content
-    const contentDiv = document.createElement('div');
-    contentDiv.className = 'entry-content';
-    while (entryEl.firstChild) {
-        contentDiv.appendChild(entryEl.firstChild);
-    }
-    entryEl.appendChild(contentDiv);
-
-    // Build and append scan panel
-    const panel = buildScanPanel(scanPages, 0);
-    entryEl.appendChild(panel);
-    entryEl.classList.add('entry-with-scan');
-    updateContainerWidth();
-}
-
-function buildScanPanel(pageIds, currentIdx) {
-    const panel = document.createElement('div');
-    panel.className = 'scan-panel';
-
-    const pid = pageIds[currentIdx];
-    const info = scanManifest[String(pid)];
-    const thumbUrl = scanBaseUrl + '/' + info.thumb;
-    const fullUrl = scanBaseUrl + '/' + info.full;
-
-    let html = `<img class="scan-thumb" src="${thumbUrl}" alt="Page ${pid} scan"
-                     onclick="openLightbox('${fullUrl}')"
-                     title="Click for full resolution">`;
-
-    if (pageIds.length > 1) {
-        html += `<div class="scan-nav">
-            <button onclick="navScan(this, -1)" ${currentIdx === 0 ? 'disabled' : ''}
-                    data-pages='${JSON.stringify(pageIds)}' data-idx="${currentIdx}">&larr;</button>
-            <span>Page ${currentIdx + 1} of ${pageIds.length}</span>
-            <button onclick="navScan(this, 1)" ${currentIdx >= pageIds.length - 1 ? 'disabled' : ''}
-                    data-pages='${JSON.stringify(pageIds)}' data-idx="${currentIdx}">&rarr;</button>
-        </div>`;
-    }
-
-    html += `<div class="scan-label">p.${pid}</div>`;
-    panel.innerHTML = html;
-    return panel;
-}
-
-function navScan(btn, dir) {
-    const pageIds = JSON.parse(btn.getAttribute('data-pages'));
-    const currentIdx = parseInt(btn.getAttribute('data-idx'));
-    const newIdx = currentIdx + dir;
-    if (newIdx < 0 || newIdx >= pageIds.length) return;
-
-    const panel = btn.closest('.scan-panel');
-    const entryEl = panel.closest('.entry');
-    const newPanel = buildScanPanel(pageIds, newIdx);
-    entryEl.replaceChild(newPanel, panel);
-}
-
-function openLightbox(fullUrl) {
-    const overlay = document.getElementById('lightbox-overlay');
-    document.getElementById('lightbox-img').src = fullUrl;
-    overlay.classList.add('active');
+    scanViewerPages = scanPages;
+    scanViewerIdx = 0;
+    showScanViewerPage();
+    document.getElementById('scan-viewer').classList.add('active');
     document.body.style.overflow = 'hidden';
 }
 
-function closeLightbox(e) {
-    if (e && e.target.tagName === 'IMG') return; // Don't close when clicking image
-    document.getElementById('lightbox-overlay').classList.remove('active');
-    document.body.style.overflow = '';
+function showScanViewerPage() {
+    const pid = scanViewerPages[scanViewerIdx];
+    const info = scanManifest[String(pid)];
+    const fullUrl = scanBaseUrl + '/' + info.full;
+    document.getElementById('scan-viewer-img').src = fullUrl;
+    document.getElementById('scan-page-label').textContent =
+        scanViewerPages.length > 1
+            ? 'Page ' + (scanViewerIdx + 1) + ' of ' + scanViewerPages.length + '  (p.' + pid + ')'
+            : 'p.' + pid;
+    document.getElementById('scan-prev').disabled = scanViewerIdx === 0;
+    document.getElementById('scan-next').disabled = scanViewerIdx >= scanViewerPages.length - 1;
+    document.getElementById('scan-prev').style.visibility = scanViewerPages.length > 1 ? 'visible' : 'hidden';
+    document.getElementById('scan-next').style.visibility = scanViewerPages.length > 1 ? 'visible' : 'hidden';
 }
 
-function updateContainerWidth() {
-    const container = document.querySelector('.container');
-    const hasOpenScan = document.querySelector('.entry-with-scan');
-    container.classList.toggle('scan-expanded', !!hasOpenScan);
+function navScanViewer(dir) {
+    const newIdx = scanViewerIdx + dir;
+    if (newIdx < 0 || newIdx >= scanViewerPages.length) return;
+    scanViewerIdx = newIdx;
+    showScanViewerPage();
+}
+
+function closeScanViewer() {
+    document.getElementById('scan-viewer').classList.remove('active');
+    document.getElementById('scan-viewer-img').src = '';
+    document.body.style.overflow = '';
 }
 
 /* ================================================================
