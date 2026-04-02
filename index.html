@@ -1245,7 +1245,7 @@ function renderEntry(entry, highlight) {
         ? ` <span class="original-date">(written as: ${escHtml(entry.date_str)})</span>`
         : '';
 
-    const hasScan = scanManifest && entry.page_ids.some(pid => scanManifest[String(pid)]);
+    const hasScan = scanManifest && (entry.scan_page_ids || entry.page_ids).some(pid => scanManifest[String(pid)]);
     const scanBtn = hasScan
         ? `<button class="btn btn-note" onclick="toggleScan(${idx})" title="Show/hide page scan">Show Scan</button>`
         : '';
@@ -1678,7 +1678,7 @@ function toggleScan(entryIdx) {
     if (!entry || !scanManifest) return;
 
     // Get pages that have scans
-    const scanPages = entry.page_ids.filter(pid => scanManifest[String(pid)]);
+    const scanPages = (entry.scan_page_ids || entry.page_ids).filter(pid => scanManifest[String(pid)]);
     if (scanPages.length === 0) return;
 
     // Wrap existing content
